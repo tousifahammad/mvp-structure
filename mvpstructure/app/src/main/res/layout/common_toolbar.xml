@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/home_toolcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary">
+
+        <RelativeLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:background="@color/transparent"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_5"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
+            <!--For Back Button-->
+            <ImageView
+                android:id="@+id/ib_back"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="15dp"
+                app:srcCompat="@mipmap/arrow" />
+
+            <!--For Menu Hamburger button-->
+            <ImageView
+                android:id="@+id/ib_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
+                android:text="@string/app_name"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_tooltitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textSize="17sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_toolbarlocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif-medium"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <!--For Cart icon-->
+            <RelativeLayout
+                android:id="@+id/layout_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:foreground="?android:attr/selectableItemBackground" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ib_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+
