@@ -28,7 +28,7 @@ public class Alert {
         }
         Alerter.create(activity)
                 .setText(message)
-                .setIcon(R.mipmap.active)
+                .setIcon(R.mipmap.ic_launcher)
                 .setBackgroundColorRes(android.R.color.holo_green_light)
                 .setDuration(1000) //this method use to set the duration for the alerter (in milliseconds)
                 .show();
@@ -44,7 +44,7 @@ public class Alert {
         Alerter.create(activity)
                 .setTitle("Error occurred !!!")
                 .setText(message)
-                .setIcon(R.mipmap.profile)
+                .setIcon(R.mipmap.ic_launcher)
                 .setBackgroundColorRes(R.color.colorPrimary)
                 .setDuration(1000) //this method use to set the duration for the alerter (in milliseconds)
                 .show();

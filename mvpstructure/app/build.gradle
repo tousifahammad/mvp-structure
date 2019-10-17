@@ -53,6 +53,10 @@ dependencies {
 
     // country picker
     implementation 'com.hbb20:ccp:1.7.1'
+
     //circleimageview
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    implementation 'org.jsoup:jsoup:1.10.2'
+
 }

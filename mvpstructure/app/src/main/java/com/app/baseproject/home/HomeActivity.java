@@ -26,7 +26,7 @@ import com.app.baseproject.login.LoginActivity;
 import com.app.baseproject.profile.ProfileActivity;
 import com.app.baseproject.utils.Alert;
 import com.app.baseproject.utils.IntentController;
-import com.app.baseproject.utils.SettingSharedPreferences;
+import com.app.baseproject.utils.SP;
 import com.bumptech.glide.Glide;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,7 +36,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ImageView hamburger_menu, iv_sos;
     private CardView home_toolcard;
     private NavigationView mNavigationView;
-    SettingSharedPreferences ssp;
     TextView tv_headphone, tv_shake, tv_location, tv_toggle, tv_check_in, tv_checkin_time, tv_timer_one, tv_timer_two;
 
     @Override
@@ -44,7 +43,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ssp = new SettingSharedPreferences(this);
 
         initNavdrawer();
 
@@ -88,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         params.setMargins(0, 0, 0, 0);
         home_toolcard.setLayoutParams(params);
 
-        hamburger_menu.setImageResource(R.mipmap.menu);
+        hamburger_menu.setImageResource(R.mipmap.ic_launcher);
         hamburger_menu.setVisibility(View.VISIBLE);
         hamburger_menu.setOnClickListener(this);
 
@@ -100,16 +98,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView tv_nav_name = hView.findViewById(R.id.tv_nav_name);
         TextView tv_nav_email = hView.findViewById(R.id.tv_nav_email);
         CircleImageView iv_nav_profile_pic = hView.findViewById(R.id.iv_nav_profile_pic);
-
-        tv_nav_name.setText(ssp.getNAME());
-        tv_nav_email.setText(ssp.getEMAIL());
-
-        if (ssp.getPROFILE_PIC() != null) {
-            Glide.with(HomeActivity.this).load(ssp.getPROFILE_PIC())
-                    //.placeholder(R.drawable.circuler_shape)
-                    .override(500, 500) // resizing
-                    .into(iv_nav_profile_pic);
-        }
     }
 
     @Override
@@ -176,7 +164,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    if (ssp.logoutFunction()) {
+                    if (SP.logoutFunction(HomeActivity.this)) {
                         //stop all services
 
                         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);

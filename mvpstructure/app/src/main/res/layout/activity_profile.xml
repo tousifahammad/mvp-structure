@@ -57,7 +57,7 @@
                         android:layout_marginRight="@dimen/margin_10"
                         android:layout_weight="1"
                         android:contentDescription="TODO"
-                        app:srcCompat="@mipmap/namepro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -121,7 +121,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/mobilepro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_mobile"
@@ -168,7 +168,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/emailpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_email"
@@ -207,7 +207,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_address1"
@@ -246,7 +246,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_address2"
@@ -285,7 +285,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_country"
@@ -330,7 +330,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_state"
@@ -364,7 +364,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_post_code"
@@ -402,7 +402,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/addpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_suburb"
@@ -447,7 +447,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/medipro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_medicare_no"
@@ -486,7 +486,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/medipro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_medical_history"
@@ -516,7 +516,7 @@
                         android:layout_marginTop="@dimen/dimen_5"
                         android:layout_toEndOf="@+id/iv_medical_history1"
                         android:onClick="onProfileImageClick"
-                        app:srcCompat="@mipmap/galary" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
                 </RelativeLayout>
 
                 <View
@@ -536,7 +536,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/birpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_dob1"
@@ -580,7 +580,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/emerpro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_emergency_contacts"
@@ -618,7 +618,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/facepro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_fb_id"
@@ -657,7 +657,7 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/margin_20"
-                        app:srcCompat="@mipmap/twipro" />
+                        app:srcCompat="@android:drawable/ic_input_add" />
 
                     <TextView
                         android:id="@+id/tv_twitter"

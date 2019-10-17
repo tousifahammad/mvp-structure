@@ -29,7 +29,7 @@
             android:id="@+id/tv_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/sidearrow"
+            android:drawableLeft="@android:drawable/ic_input_add"
             android:drawablePadding="@dimen/margin_10"
             android:text="Message"
             android:textColor="@color/colorGrey5A" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
-            app:srcCompat="@mipmap/feedback" />
+            app:srcCompat="@android:drawable/ic_input_add" />
     </LinearLayout>
 
 </LinearLayout>

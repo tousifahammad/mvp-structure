@@ -8,6 +8,8 @@ import com.app.baseproject.home.HomeActivity;
 import com.app.baseproject.loaders.JSONFunctions;
 import com.app.baseproject.utils.Alert;
 import com.app.baseproject.utils.IntentController;
+import com.app.baseproject.utils.SP;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,13 +27,11 @@ public class LoginPresenter extends BasePresenter {
         if (JSONFunctions.isInternetOn(activity)) {
             getpDialog().setMessage("Connecting you to the server");
 
-            String url = WebServices.commonUrl + WebServices.login;
-
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("email", username);
             hashMap.put("password", password);
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_login);
+            getJfns().makeHttpRequest(WebServices.customer_login, "POST", hashMap, false, WebServices.request_url_no_1);
             getpDialog().show();
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_login:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity)) {
                     getLoginResponse(result);
                 }
@@ -55,53 +55,18 @@ public class LoginPresenter extends BasePresenter {
 
     private void getLoginResponse(String response) {
         try {
-            JSONObject jobj = new JSONObject(response);
-            JSONObject jsonObject = jobj.getJSONObject(WebServices.data);
+            JSONArray jsonArray = SharedMethods.getDataArray(response, activity);
 
-            if (jsonObject != null) {
-                getSsp().setUSERID(jsonObject.getString("id"));
-                getSsp().setUSERNAME(jsonObject.getString("name"));
-                getSsp().setEMAIL(jsonObject.getString("email"));
-                getSsp().setPROFILE_PIC(jsonObject.getString("profile_pic"));
+            if (jsonArray != null) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject user_jo = jsonArray.getJSONObject(i);
+                    SP.setStringPreference(activity, SP.user_id, user_jo.getString("id"));
+                    SP.setStringPreference(activity, SP.name, user_jo.getString("name"));
+                    SP.setStringPreference(activity, SP.mobile, user_jo.getString("mobile"));
 
-                getSsp().setLOGIN_RESPONSE(response);
-
-                JSONArray jsonArray = jsonObject.getJSONArray("dureslist");
-                //Log.d("1111", "getLoginResponse: " + jsonArray);
-                if (jsonArray.length() > 0) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        String id = jsonObject1.getString("id");
-                        switch (id) {
-                            case "1":
-                                getSsp().setHEADPHONE_ID(id);
-                                break;
-                            case "2":
-                                getSsp().setSHAKE_ID(id);
-                                break;
-                            case "3":
-                                getSsp().setTOGGLE_ID(id);
-                                break;
-                            case "4":
-                                getSsp().setCHECK_IN_ID(id);
-                                break;
-                            case "5":
-                                getSsp().setSOS_ID(id);
-                                break;
-                            case "6":
-                                getSsp().setLOCATION_ID(id);
-                                break;
-                        }
-                    }
+                    IntentController.sendIntent(activity, HomeActivity.class);
+                    activity.finish();
                 }
-
-                // delete config only if new user login in same device or keep settings for same user login
-                if (!getSsp().getUSERID().equals(getSsp().getPREVIOUS_USER_ID())) {
-                    getSsp().duressConfigEditor.clear().commit();
-                }
-                getSsp().setPREVIOUS_USER_ID(getSsp().getUSERID());
-
-                IntentController.gotToActivityNoBack(activity, HomeActivity.class);
             }
         } catch (JSONException ex) {
             Alert.showError(activity, ex.getMessage());

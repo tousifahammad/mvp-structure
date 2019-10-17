@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_50"
-            android:background="@color/transparent"
+            android:background="@color/colorTransparent"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_5"
             android:paddingRight="@dimen/activity_horizontal_margin">
@@ -29,7 +29,7 @@
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="15dp"
-                app:srcCompat="@mipmap/arrow" />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
             <!--For Menu Hamburger button-->
             <ImageView

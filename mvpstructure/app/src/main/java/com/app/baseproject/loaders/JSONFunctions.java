@@ -1,9 +1,5 @@
 package com.app.baseproject.loaders;
 
-/**
- * Created by Suvo on 10-May-16.
- */
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -16,6 +12,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.app.baseproject.baseclasses.WebServices;
+import com.app.baseproject.utils.AppData;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
@@ -58,23 +55,22 @@ public class JSONFunctions implements Callback<String> {
 
     private String method;
     private String url;
-    private HashMap<String,String> hm=null;
-    private HashMap<String,RequestBody> fileBodyMap=null;
-    private HashMap<String,RequestBody> stringBodyMap=null;
+    private HashMap<String, String> hm = null;
+    private HashMap<String, RequestBody> fileBodyMap = null;
+    private HashMap<String, RequestBody> stringBodyMap = null;
     private OkHttpClient httpClient = new OkHttpClient();
 
     private JSONObject paramObject = null;
     int url_no;
-    boolean isMultipart=false;
+    boolean isMultipart = false;
     private Retrofit retrofit = null;
 
-    public JSONFunctions(OnJSONResponseListener ojrl){
-        this.ojrl=ojrl;
+    public JSONFunctions(OnJSONResponseListener ojrl) {
+        this.ojrl = ojrl;
     }
 
 
-
-    private void setupClientParams(){
+    private void setupClientParams() {
         System.out.println("Inside setupClientParams method");
         /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);*/
@@ -92,12 +88,12 @@ public class JSONFunctions implements Callback<String> {
                     }
                 })
                 .build();
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(WebServices.commonUrl)
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .client(httpClient)
-                    .build();
+        retrofit = new Retrofit.Builder()
+                .baseUrl(WebServices.BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
+                .build();
              /*.client(httpClient.newBuilder().addInterceptor(new Interceptor() {
                       @Override
                       public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -109,29 +105,29 @@ public class JSONFunctions implements Callback<String> {
                     }).build())*/
     }
 
-    private synchronized void makeRequest(int url_no){
+    private synchronized void makeRequest(int url_no) {
         //System.out.println("Inside makeRequest method");
-        this.url_no=url_no;
+        this.url_no = url_no;
         RequestInterface apiService = retrofit.create(RequestInterface.class);
-        Call<String> call=null;
+        Call<String> call = null;
 
         if (method.equalsIgnoreCase("POST")) {
             // request method is POST
-            if(stringBodyMap!=null&&fileBodyMap!=null){
-                call=apiService.makeMultipartFilePostRequest(url,fileBodyMap,stringBodyMap);
+            if (stringBodyMap != null && fileBodyMap != null) {
+                call = apiService.makeMultipartFilePostRequest(url, fileBodyMap, stringBodyMap);
                 System.out.println("makeMultipartFilePostRequest(url,fileBodyMap,stringBodyMap) method called");
             }
-            if(stringBodyMap!=null&&fileBodyMap==null){
-                call=apiService.makeMultipartStringPostRequest(url,stringBodyMap);
+            if (stringBodyMap != null && fileBodyMap == null) {
+                call = apiService.makeMultipartStringPostRequest(url, stringBodyMap);
                 System.out.println("makeMultipartStringPostRequest(url,stringBodyMap) method called");
             }
 
-            if(stringBodyMap==null&&fileBodyMap==null){
-                if(hm!=null){
-                    call=apiService.makePostParamRequest(url,hm);
+            if (stringBodyMap == null && fileBodyMap == null) {
+                if (hm != null) {
+                    call = apiService.makePostParamRequest(url, hm);
                     System.out.println("makePostParamRequest(url,hm) method called");
-                }else{
-                    call=apiService.makePostRequest(url);
+                } else {
+                    call = apiService.makePostRequest(url);
                     Log.e("url", url);
                     System.out.println("makePostRequest(url) method called");
                 }
@@ -139,112 +135,120 @@ public class JSONFunctions implements Callback<String> {
 
         } else if (method.equalsIgnoreCase("GET")) {
             // request method is GET
-            if(hm!=null){
-                call=apiService.makeGetParamRequest(url,hm);
+            if (hm != null) {
+                call = apiService.makeGetParamRequest(url, hm);
                 System.out.println("makeGetParamRequest(url,hm) method called");
-            }else{
-                call=apiService.makeGetRequest(url);
+            } else {
+                call = apiService.makeGetRequest(url);
                 System.out.println("makeGetRequest(url) method called");
             }
 
         }
-        if(call!=null)
-        call.enqueue(this);
-        else{
+        if (call != null)
+            call.enqueue(this);
+        else {
             System.out.println("Something wrong, call is null");
         }
     }
 
-  private synchronized void makeRawRequest(int url_no){
-    this.url_no=url_no;
-    RequestInterface apiService = retrofit.create(RequestInterface.class);
-    Call<String> call=null;
+    private synchronized void makeRawRequest(int url_no) {
+        this.url_no = url_no;
+        RequestInterface apiService = retrofit.create(RequestInterface.class);
+        Call<String> call = null;
 
-    if (method.equalsIgnoreCase("POST")){
-      //Raw data input
-      if (paramObject!= null){
-          Log.e("url", url);
-          Log.e("paramObject", paramObject.toString());
-          call=apiService.makeRawStringPostRequest(url, paramObject.toString());
-          System.out.println("makeRawStringPostRequest(url) method called");
-      }
-    } else if (method.equalsIgnoreCase("GET")){
-      if (paramObject!= null){
-          call=apiService.makeRawStringPostRequest(url,paramObject.toString());
-          System.out.println("makeRawStringPostRequest(url) method called");
-      }
+        if (method.equalsIgnoreCase("POST")) {
+            //Raw data input
+            if (paramObject != null) {
+                Log.e("url", url);
+                Log.e("paramObject", paramObject.toString());
+                call = apiService.makeRawStringPostRequest(url, paramObject.toString());
+                System.out.println("makeRawStringPostRequest(url) method called");
+            }
+        } else if (method.equalsIgnoreCase("GET")) {
+            if (paramObject != null) {
+                call = apiService.makeRawStringPostRequest(url, paramObject.toString());
+                System.out.println("makeRawStringPostRequest(url) method called");
+            }
+        }
+        if (call != null)
+            call.enqueue(this);
+        else {
+            System.out.println("Something wrong, call is null");
+        }
     }
-    if(call!=null)
-      call.enqueue(this);
-    else {
-      System.out.println("Something wrong, call is null");
-    }
-  }
 
-    private void callRequest(int url_no){
+    private void callRequest(int url_no) {
         //System.out.println("Inside callRequest method");
         setupClientParams();
         makeRequest(url_no);
     }
 
-    private void callRawRequest(int url_no){
-      setupClientParams();
-      makeRawRequest(url_no);
+    private void callRawRequest(int url_no) {
+        setupClientParams();
+        makeRawRequest(url_no);
     }
 
-    public void makeHttpRequest(String url, String method, int url_no){
-        //System.out.println("Inside makeHttpRequest method");
-        this.method=method;
-        this.url=url;
+    public void makeHttpRequest(String url, String method, int url_no) {
+        Log.d(AppData.TAG, "URL ====> : " + url);
+        Log.d(AppData.TAG, "PARAMS ====> : " + hm);
+
+        this.method = method;
+        this.url = WebServices.BASE_URL + url;
 
         callRequest(url_no);
     }
 
-    public void makeHttpRequest(String url, String method, HashMap<String,String> hmString, HashMap<String,File> hmFile, int url_no){
-        //System.out.println("Inside makeHttpRequest method");
-        this.hm=hmString;
-        this.method=method;
-        this.url=url;
-        stringBodyMap=createStringBodyMap(hm);
-        fileBodyMap=createFileBodyMap(hmFile);
+    public void makeHttpRequest(String url, String method, HashMap<String, String> hmString, HashMap<String, File> hmFile, int url_no) {
+        Log.d(AppData.TAG, "URL ====> : " + url);
+        Log.d(AppData.TAG, "PARAMS ====> : " + hm);
+
+        this.hm = hmString;
+        this.method = method;
+        this.url = WebServices.BASE_URL + url;
+        stringBodyMap = createStringBodyMap(hm);
+        fileBodyMap = createFileBodyMap(hmFile);
 
         callRequest(url_no);
     }
 
     public void makeHttpRequest(String url, String method, HashMap<String, String> hm, boolean isMultipart, int url_no) {
-        // Making HTTP request
+        Log.d(AppData.TAG, "URL ====> : " + url);
+        Log.d(AppData.TAG, "PARAMS ====> : " + hm);
 
-        //System.out.println("Inside makeHttpRequest method");
-        this.hm=hm;
-        this.method=method;
-        this.isMultipart=isMultipart;
-        this.url=url;
-        if(this.isMultipart)
-        stringBodyMap=createStringBodyMap(hm);
+        this.hm = hm;
+        this.method = method;
+        this.isMultipart = isMultipart;
+        this.url = WebServices.BASE_URL + url;
+        if (this.isMultipart)
+            stringBodyMap = createStringBodyMap(hm);
 
         callRequest(url_no);
     }
 
     public void makeRawHttpRequest(String url, String method, HashMap<String, String> hm, int url_no) {
-      this.paramObject = createRawStringBody(hm);
-      this.method=method;
-      this.url=url;
+        Log.d(AppData.TAG, "URL ====> : " + url);
+        Log.d(AppData.TAG, "PARAMS ====> : " + hm);
 
-      callRawRequest(url_no);
+        this.paramObject = createRawStringBody(hm);
+        this.method = method;
+        this.url = WebServices.BASE_URL + url;
+
+        callRawRequest(url_no);
     }
 
 
-  @Override
+    @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        String strJson=response.body();
-        System.out.println("Inside onResponse"+strJson);
-        ojrl.getJSONResponseResult(strJson,url_no);
+        String strJson = response.body();
+        System.out.println("RESPONSE ====> : " + strJson);
+
+        ojrl.getJSONResponseResult(strJson, url_no);
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
         System.out.println("Inside onFailure, null will return");
-        ojrl.getJSONResponseResult(null,url_no);
+        ojrl.getJSONResponseResult(null, url_no);
     }
 
 /*   @Override
@@ -287,7 +291,7 @@ public class JSONFunctions implements Callback<String> {
         ojrl.getJSONResponseResult(null,url_no);
     }*/
 
-    private interface RequestInterface{
+    private interface RequestInterface {
         @GET
         Call<String> makeGetParamRequest(@Url String url, @QueryMap Map<String, String> map);
 
@@ -331,132 +335,128 @@ public class JSONFunctions implements Callback<String> {
     }
 
 
-  private JSONObject createRawStringBody(HashMap<String, String> hm) {
-    JSONObject paramObject =new JSONObject();
-    for(Map.Entry<String,String> entry:hm.entrySet()){
-      String key=entry.getKey();
-      String value=entry.getValue();
-      if(value==null){
-          value="";
-      }
-      try {
-          System.out.println("Key:"+key+",Value:"+value);
-          if(value.startsWith("{")){
-              JSONObject jObject=new JSONObject(value);
-               paramObject.put(key,jObject);
-          }else if(value.startsWith("[")){
-              JSONArray jArray=new JSONArray(value);
-              paramObject.put(key,jArray);
-          }else {
-              paramObject.put(key, value);
-          }
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+    private JSONObject createRawStringBody(HashMap<String, String> hm) {
+        JSONObject paramObject = new JSONObject();
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (value == null) {
+                value = "";
+            }
+            try {
+                System.out.println("Key:" + key + ",Value:" + value);
+                if (value.startsWith("{")) {
+                    JSONObject jObject = new JSONObject(value);
+                    paramObject.put(key, jObject);
+                } else if (value.startsWith("[")) {
+                    JSONArray jArray = new JSONArray(value);
+                    paramObject.put(key, jArray);
+                } else {
+                    paramObject.put(key, value);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return paramObject;
     }
-    return paramObject;
-  }
 
-    private HashMap<String,RequestBody> createStringBodyMap(HashMap<String,String> hm){
-        HashMap<String,RequestBody> hmString=new HashMap<String,RequestBody>();
-        for(Map.Entry<String,String> entry:hm.entrySet()){
-            String key=entry.getKey();
-            String value=entry.getValue();
-            RequestBody requestValue=createRequestBody(value);
-            hmString.put(key,requestValue);
+    private HashMap<String, RequestBody> createStringBodyMap(HashMap<String, String> hm) {
+        HashMap<String, RequestBody> hmString = new HashMap<String, RequestBody>();
+        for (Map.Entry<String, String> entry : hm.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            RequestBody requestValue = createRequestBody(value);
+            hmString.put(key, requestValue);
         }
         return hmString;
     }
 
 
-    private HashMap<String,RequestBody> createFileBodyMap(HashMap<String,File> hm) {
-        HashMap<String,RequestBody> hmFile=new HashMap<String,RequestBody>();
-        for(Map.Entry<String,File> entry:hm.entrySet()){
-            String key=entry.getKey();
-            File value=entry.getValue();
-            RequestBody requestValue=createRequestBody(value);
-            hmFile.put(key,requestValue);
+    private HashMap<String, RequestBody> createFileBodyMap(HashMap<String, File> hm) {
+        HashMap<String, RequestBody> hmFile = new HashMap<String, RequestBody>();
+        for (Map.Entry<String, File> entry : hm.entrySet()) {
+            String key = entry.getKey();
+            File value = entry.getValue();
+            RequestBody requestValue = createRequestBody(value);
+            hmFile.put(key, requestValue);
         }
         return hmFile;
 
     }
 
 
-    public interface OnJSONResponseListener{
-         void getJSONResponseResult(String result, int url_no);
+    public interface OnJSONResponseListener {
+        void getJSONResponseResult(String result, int url_no);
     }
 
 
+    public static boolean isInternetOn(Context context) {
 
-    public static boolean isInternetOn(Context context){
-
-        ConnectivityManager connectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null)
-        {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)
                 for (int i = 0; i < info.length; i++)
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED)
-                    {
+                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
                         return true;
                     }
 
         }
         return false;
-        }
+    }
 
     public void setImageFromUrl(Context context, String url, Integer errorImage, ImageView imgvw, boolean isCircular) {
-        CustomCircularImageViewTarget target=new CustomCircularImageViewTarget(context,imgvw,isCircular);
+        CustomCircularImageViewTarget target = new CustomCircularImageViewTarget(context, imgvw, isCircular);
         if (errorImage != null) {
             Glide.with(context).load(url).asBitmap().centerCrop().error(errorImage).into(target);
-        }else{
+        } else {
             Glide.with(context).load(url).asBitmap().into(target);
         }
     }
 
-    public void setImageFromUrl(Fragment fragment, String url, Integer errorImage, ImageView imgvw, boolean isCircular){
-        CustomCircularImageViewTarget target=new CustomCircularImageViewTarget(fragment,imgvw,isCircular);
+    public void setImageFromUrl(Fragment fragment, String url, Integer errorImage, ImageView imgvw, boolean isCircular) {
+        CustomCircularImageViewTarget target = new CustomCircularImageViewTarget(fragment, imgvw, isCircular);
         if (errorImage != null) {
             Glide.with(fragment).load(url).asBitmap().centerCrop().error(errorImage).into(target);
-        }else{
+        } else {
             Glide.with(fragment).load(url).asBitmap().into(target);
         }
     }
 
 
-
     private class CustomCircularImageViewTarget extends BitmapImageViewTarget {
         ImageView imgvw;
-        boolean isCircular=false;
-        Context context=null;
-        Fragment fragment=null;
+        boolean isCircular = false;
+        Context context = null;
+        Fragment fragment = null;
+
         public CustomCircularImageViewTarget(Context context, ImageView view, boolean isCircular) {
             super(view);
-            CustomCircularImageViewTarget.this.imgvw=view;
-            CustomCircularImageViewTarget.this.isCircular=isCircular;
-            CustomCircularImageViewTarget.this.context=context;
+            CustomCircularImageViewTarget.this.imgvw = view;
+            CustomCircularImageViewTarget.this.isCircular = isCircular;
+            CustomCircularImageViewTarget.this.context = context;
         }
 
         public CustomCircularImageViewTarget(Fragment fragment, ImageView view, boolean isCircular) {
             super(view);
-            CustomCircularImageViewTarget.this.imgvw=view;
-            CustomCircularImageViewTarget.this.isCircular=isCircular;
-            CustomCircularImageViewTarget.this.fragment=fragment;
+            CustomCircularImageViewTarget.this.imgvw = view;
+            CustomCircularImageViewTarget.this.isCircular = isCircular;
+            CustomCircularImageViewTarget.this.fragment = fragment;
         }
-
 
 
         @Override
         protected void setResource(Bitmap resource) {
-            RoundedBitmapDrawable circularBitmapDrawable=null;
-            if(context!=null) {
+            RoundedBitmapDrawable circularBitmapDrawable = null;
+            if (context != null) {
                 circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-            }else if(fragment!=null) {
+            } else if (fragment != null) {
                 circularBitmapDrawable = RoundedBitmapDrawableFactory.create(fragment.getResources(), resource);
             }
-            if(isCircular)
+            if (isCircular)
                 circularBitmapDrawable.setCircular(true);
-            if(circularBitmapDrawable!=null)
+            if (circularBitmapDrawable != null)
                 imgvw.setImageDrawable(circularBitmapDrawable);
         }
 

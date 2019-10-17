@@ -11,6 +11,7 @@ import com.app.baseproject.baseclasses.SharedMethods;
 import com.app.baseproject.registration.RegistrationActivity;
 import com.app.baseproject.utils.Alert;
 import com.app.baseproject.utils.IntentController;
+import com.app.baseproject.utils.Validator;
 
 public class ForgotActivity extends AppCompatActivity {
     EditText et_email_id;
@@ -64,7 +65,7 @@ public class ForgotActivity extends AppCompatActivity {
         if (et_email_id.getText().toString().isEmpty()) {
             Alert.showError(this, "Please enter email");
             return false;
-        } else if (!SharedMethods.validateEmail(et_email_id.getText().toString().trim())) {
+        } else if (!Validator.validateEmail(et_email_id.getText().toString().trim())) {
             Alert.showError(this, "Please enter valid email id");
             return false;
         }

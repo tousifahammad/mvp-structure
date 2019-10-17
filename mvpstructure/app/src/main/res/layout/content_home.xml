@@ -27,15 +27,15 @@
                 android:id="@+id/imageView9"
                 android:layout_width="111dp"
                 android:layout_height="111dp"
-                app:srcCompat="@mipmap/namepro" />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
             <TextView
                 android:id="@+id/tv_headphone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
-                android:drawableLeft="@mipmap/headphone"
-                android:drawableRight="@mipmap/iactive"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:drawableRight="@android:drawable/ic_input_add"
                 android:drawablePadding="@dimen/margin_10"
                 android:gravity="center_vertical"
                 android:text="Headphone"
@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
-                android:drawableLeft="@mipmap/shake"
-                android:drawableRight="@mipmap/iactive"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:drawableRight="@android:drawable/ic_input_add"
                 android:drawablePadding="@dimen/margin_10"
                 android:gravity="center_vertical"
                 android:text="Shake"
@@ -72,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
-                android:drawableLeft="@mipmap/location"
-                android:drawableRight="@mipmap/iactive"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:drawableRight="@android:drawable/ic_input_add"
                 android:drawablePadding="@dimen/margin_10"
                 android:gravity="center_vertical"
                 android:text="Location"
@@ -91,8 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
-                android:drawableLeft="@mipmap/toggle"
-                android:drawableRight="@mipmap/iactive"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:drawableRight="@android:drawable/ic_input_add"
                 android:drawablePadding="@dimen/margin_10"
                 android:gravity="center_vertical"
                 android:text="Toggle"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:onClick="onSOSClicked"
-                app:srcCompat="@mipmap/sos" />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
             <View
                 android:id="@+id/divider8"
@@ -141,8 +141,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:drawableLeft="@mipmap/checkin"
-                    android:drawableRight="@mipmap/iactive"
+                    android:drawableLeft="@android:drawable/ic_input_add"
+                    android:drawableRight="@android:drawable/ic_input_add"
                     android:drawablePadding="@dimen/margin_10"
                     android:gravity="center_vertical"
                     android:text="Welfare check in" />

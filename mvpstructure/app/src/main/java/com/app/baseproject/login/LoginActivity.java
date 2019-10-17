@@ -6,11 +6,11 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 
 import com.app.baseproject.R;
-import com.app.baseproject.baseclasses.SharedMethods;
 import com.app.baseproject.forgotpassword.ForgotActivity;
 import com.app.baseproject.home.HomeActivity;
 import com.app.baseproject.registration.RegistrationActivity;
 import com.app.baseproject.utils.IntentController;
+import com.app.baseproject.utils.Validator;
 
 public class LoginActivity extends AppCompatActivity {
     AppCompatEditText et_username, et_password;
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         String username = et_username.getText().toString().trim();
         String password = et_password.getText().toString().trim();
 
-        if (validateEveryField(username, password)) {
+        if (!validateEveryField(username, password)) {
             //presenter.login(username, password);
             IntentController.sendIntent(LoginActivity.this, HomeActivity.class);
         }
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             et_username.setError("Username : " + getString(R.string.field_empty));
             return false;
 
-        } else if (!SharedMethods.validateEmail(username)) {
+        } else if (!Validator.validateEmail(username)) {
             et_username.setError(getString(R.string.invalid));
             return false;
 

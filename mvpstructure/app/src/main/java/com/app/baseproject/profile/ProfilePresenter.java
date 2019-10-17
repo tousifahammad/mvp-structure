@@ -11,7 +11,7 @@ import com.app.baseproject.home.HomeActivity;
 import com.app.baseproject.loaders.JSONFunctions;
 import com.app.baseproject.utils.Alert;
 import com.app.baseproject.utils.IntentController;
-import com.app.baseproject.utils.SettingSharedPreferences;
+import com.app.baseproject.utils.SP;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
@@ -31,13 +31,13 @@ public class ProfilePresenter extends BasePresenter {
     @Override
     public void getJSONResponseResult(String result, int url_no) {
         switch (url_no) {
-            case WebServices.url_no_profile:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity)) {
                     responseProfileDetails(result);
                 }
                 break;
 
-            case WebServices.url_no_country_list:
+            case WebServices.request_url_no_2:
                 if (getpDialog().isShowing()) {
                     getpDialog().dismiss();
                 }
@@ -46,21 +46,21 @@ public class ProfilePresenter extends BasePresenter {
                 }
                 break;
 
-            case WebServices.url_no_state_list:
+            case WebServices.request_url_no_3:
                 if (getpDialog().isShowing()) {
                     getpDialog().dismiss();
                 }
                 responseStateList(result);
                 break;
 
-            case WebServices.url_no_suburb_list:
+            case WebServices.request_url_no_4:
                 if (getpDialog().isShowing()) {
                     getpDialog().dismiss();
                 }
                 responseSuburbList(result);
                 break;
 
-            case WebServices.url_no_updateProfile:
+            case WebServices.request_url_no_5:
                 if (getpDialog().isShowing()) {
                     getpDialog().dismiss();
                 }
@@ -68,9 +68,9 @@ public class ProfilePresenter extends BasePresenter {
                     try {
                         Toast.makeText(activity, new JSONObject(result).getString(WebServices.message), Toast.LENGTH_SHORT).show();
                         //for first time profile open in edit mode
-                        if (getSsp().getIS_FIRST_TIME_PROFILE()) {
-                            getSsp().setIS_FIRST_TIME_PROFILE(false);
-                        }
+//                        if (getSsp().getIS_FIRST_TIME_PROFILE()) {
+//                            getSsp().setIS_FIRST_TIME_PROFILE(false);
+//                        }
                         IntentController.gotToActivityNoBack(activity, HomeActivity.class);
                     } catch (Exception e) {
                         Alert.showError(activity, e.getMessage());
@@ -86,12 +86,12 @@ public class ProfilePresenter extends BasePresenter {
             getpDialog().setMessage("Getting your profile details from the server");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.profile;
+            String url = WebServices.customer_login;
 
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_id", getSsp().getUSERID());
+            hashMap.put("user_id", SP.getStringPreference(activity, SP.user_id));
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_profile);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
 
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
@@ -151,8 +151,12 @@ public class ProfilePresenter extends BasePresenter {
         if (JSONFunctions.isInternetOn(activity)) {
             getpDialog().setMessage("Getting countries from the server");
 
-            String url = WebServices.commonUrl + WebServices.country_list;
-            getJfns().makeHttpRequest(url, "POST", WebServices.url_no_country_list);
+            String url = WebServices.customer_login;
+
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("user_id", SP.getStringPreference(activity, SP.user_id));
+
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
 
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
@@ -178,12 +182,12 @@ public class ProfilePresenter extends BasePresenter {
     public void requestStateList() {
         if (JSONFunctions.isInternetOn(activity)) {
 
-            String url = WebServices.commonUrl + WebServices.state_list;
+            String url = WebServices.customer_login;
 
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("country_id", activity.country_id);
+            hashMap.put("user_id", SP.getStringPreference(activity, SP.user_id));
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_state_list);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
 
             getpDialog().setMessage("Getting states from the server");
             if (!getpDialog().isShowing()) {
@@ -217,11 +221,12 @@ public class ProfilePresenter extends BasePresenter {
 
     public void requestSuburbList() {
         if (JSONFunctions.isInternetOn(activity)) {
-            String url = WebServices.commonUrl + WebServices.suburb_list;
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("state_id", activity.state_id);
+            String url = WebServices.customer_login;
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_suburb_list);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("user_id", SP.getStringPreference(activity, SP.user_id));
+
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
 
             getpDialog().setMessage("Getting suburbs from the server");
             if (!getpDialog().isShowing()) {
@@ -258,12 +263,12 @@ public class ProfilePresenter extends BasePresenter {
             getpDialog().setMessage("Updating your profile");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.updateProfile;
+            String url = WebServices.customer_login;
             //user_id,email,name,address1,address2,country_id,state_id,suburb_id,post_code,mobile_number,taxfile_no
             //medical_no,medical_history,dob,facebook_id,twitter_id,profile_pic
 
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_id", getSsp().getUSERID());
+            //hashMap.put("user_id", getSsp().getUSERID());
             hashMap.put("name", activity.et_name.getText().toString().trim());
             hashMap.put("email", activity.et_email.getText().toString().trim());
             hashMap.put("mobile_number", activity.et_mobile.getText().toString().trim());
@@ -282,7 +287,7 @@ public class ProfilePresenter extends BasePresenter {
 
             Log.d("1111", "requestProfileUpload: " + hashMap.toString());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_updateProfile);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_5);
 
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));

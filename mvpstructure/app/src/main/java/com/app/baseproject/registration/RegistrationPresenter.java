@@ -36,13 +36,13 @@ public class RegistrationPresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_registration:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity)) {
                     responseRegistration(result);
                 }
                 break;
 
-            case WebServices.url_no_registrationOTP:
+            case WebServices.request_url_no_2:
                 if (SharedMethods.isSuccess(result, activity)) {
                     responseRegistrationOTP(result);
                 }
@@ -56,7 +56,7 @@ public class RegistrationPresenter extends BasePresenter {
             getpDialog().setMessage("Registration on process");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.registration;
+            String url = WebServices.registration;
 
             //String mobile_number = activity.selected_country_code + activity.et_mobile.getText().toString().trim();
             String mobile_number = activity.et_mobile.getText().toString().trim();
@@ -67,7 +67,7 @@ public class RegistrationPresenter extends BasePresenter {
             hashMap.put("mobile_number", mobile_number);
             hashMap.put("password", activity.et_password.getText().toString().trim());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_registration);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
         }
@@ -92,7 +92,7 @@ public class RegistrationPresenter extends BasePresenter {
             getpDialog().setMessage("Sending OTP to the requested email id");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.registrationOTP;
+            String url = WebServices.registration;
 
             HashMap<String, String> hashMap = new HashMap<>();
             //String mobile_number = activity.selected_country_code + activity.et_mobile.getText().toString().trim();
@@ -100,7 +100,7 @@ public class RegistrationPresenter extends BasePresenter {
             hashMap.put("mobile_number", mobile_number);
             hashMap.put("email", activity.et_email.getText().toString().trim());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_registrationOTP);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_2);
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
         }

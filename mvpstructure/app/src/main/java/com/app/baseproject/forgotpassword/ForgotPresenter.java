@@ -30,12 +30,12 @@ public class ForgotPresenter extends BasePresenter {
             getpDialog().setMessage("Sending new password to requested email id");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.forgot_Password;
+            String url = WebServices.customer_login;
 
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("email", activity.et_email_id.getText().toString().trim());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_forgot_Password);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
 
         } else {
             Toast.makeText(activity, activity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
@@ -49,7 +49,7 @@ public class ForgotPresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_forgot_Password:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity))
                     responseForgotPassword(result);
                 break;

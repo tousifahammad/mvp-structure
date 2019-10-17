@@ -32,7 +32,7 @@
                 android:id="@+id/imageView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/forgot" />
+                app:srcCompat="@android:drawable/ic_input_add" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:drawableLeft="@mipmap/name"
+                android:drawableLeft="@android:drawable/ic_input_add"
                 android:drawablePadding="@dimen/margin_10"
                 android:ems="10"
                 android:hint="Enter Email Id"

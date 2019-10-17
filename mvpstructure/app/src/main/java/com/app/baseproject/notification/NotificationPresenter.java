@@ -6,6 +6,7 @@ import com.app.baseproject.baseclasses.SharedMethods;
 import com.app.baseproject.baseclasses.WebServices;
 import com.app.baseproject.loaders.JSONFunctions;
 import com.app.baseproject.utils.Alert;
+import com.app.baseproject.utils.SP;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,12 +26,12 @@ public class NotificationPresenter extends BasePresenter {
         if (JSONFunctions.isInternetOn(activity)) {
             getpDialog().setMessage("Getting notifications from the server. Please wait...");
 
-            String url = WebServices.commonUrl + WebServices.notification_list;
+            String url = WebServices.customer_login;
 
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_id", getSsp().getUSERID());
+            hashMap.put("user_id", SP.getStringPreference(activity, SP.user_id));
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_notification_list);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
             getpDialog().show();
         } else {
             Alert.showError(activity, activity.getString(R.string.no_internet));
@@ -44,7 +45,7 @@ public class NotificationPresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_notification_list:
+            case WebServices.request_url_no_1:
                 responseNotifications(result);
                 break;
         }

@@ -14,7 +14,7 @@
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/margin_40"
         android:contentDescription="111"
-        app:srcCompat="@mipmap/profile" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <LinearLayout
         android:layout_width="match_parent"

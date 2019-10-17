@@ -34,7 +34,7 @@ import com.app.baseproject.BuildConfig;
 import com.app.baseproject.R;
 import com.app.baseproject.baseclasses.SharedMethods;
 import com.app.baseproject.utils.Alert;
-import com.app.baseproject.utils.SettingSharedPreferences;
+import com.app.baseproject.utils.Validator;
 import com.hbb20.CountryCodePicker;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -101,10 +101,10 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
 
         all_view = getAllChildren(ll_root_view);
 
-        //for first time profile open in edit mode
-        if (new SettingSharedPreferences(this).getIS_FIRST_TIME_PROFILE()) {
-            isEditModeEnable = true;
-        }
+//        //for first time profile open in edit mode
+//        if (new SettingSharedPreferences(this).getIS_FIRST_TIME_PROFILE()) {
+//            isEditModeEnable = true;
+//        }
         changeEditMode();
 
         //new ProfilePresenter(this).requestProfileDetails();
@@ -123,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         });
 
         iv_edit = findViewById(R.id.ib_filter);
-        iv_edit.setImageResource(R.mipmap.edit);
+        iv_edit.setImageResource(R.mipmap.ic_launcher);
         iv_edit.setVisibility(View.VISIBLE);
         iv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             Toast.makeText(this, "Edit mode on", Toast.LENGTH_SHORT).show();
 
             isEditModeEnable = false;
-            iv_edit.setImageResource(R.mipmap.edit);
+            iv_edit.setImageResource(R.mipmap.ic_launcher);
             btn_update.setVisibility(View.VISIBLE);
 
             for (int i = 0; i < all_view.size(); i++) {
@@ -193,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             Toast.makeText(this, "Read mode on", Toast.LENGTH_SHORT).show();
 
             isEditModeEnable = true;
-            iv_edit.setImageResource(R.mipmap.list);
+            iv_edit.setImageResource(R.mipmap.ic_launcher);
             btn_update.setVisibility(View.GONE);
             btn_delete.setVisibility(View.GONE);
 
@@ -272,7 +272,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             Alert.showError(this, "First name : " + getString(R.string.field_empty));
             return false;
 
-        } else if (!SharedMethods.validateName(et_name.getText().toString().trim())) {
+        } else if (!Validator.validateName(et_name.getText().toString().trim())) {
             Alert.showError(this, "Invalid first name");
             return false;
 
@@ -288,7 +288,7 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
             Alert.showError(this, "Email : " + getString(R.string.field_empty));
             return false;
 
-        } else if (!SharedMethods.validateEmail(et_email.getText().toString().trim())) {
+        } else if (!Validator.validateEmail(et_email.getText().toString().trim())) {
             Alert.showError(this, "Invalid email");
             return false;
 

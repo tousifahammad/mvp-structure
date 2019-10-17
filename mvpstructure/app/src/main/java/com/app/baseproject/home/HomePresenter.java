@@ -23,9 +23,9 @@ public class HomePresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_contact_list:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity)) {
-                    getSsp().setEMERGENCY_CONTACT_LIST(result);
+                    //getSsp().setEMERGENCY_CONTACT_LIST(result);
                 }
                 break;
         }
@@ -36,12 +36,10 @@ public class HomePresenter extends BasePresenter {
             getpDialog().setMessage("Getting your emergency contacts from the server");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.contact_list;
-
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_id", getSsp().getUSERID());
+            //hashMap.put("user_id", getSsp().getUSERID());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_contact_list);
+            getJfns().makeHttpRequest(WebServices.customer_login, "POST", hashMap, false, WebServices.request_url_no_1);
 
         } else {
             Toast.makeText(activity, activity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();

@@ -3,7 +3,6 @@ package com.app.baseproject.baseclasses;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.telephony.SmsManager;
 import android.util.Base64;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.app.baseproject.R;
 import com.app.baseproject.utils.Alert;
-import com.app.baseproject.utils.SettingSharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,34 +92,34 @@ public class SharedMethods {
     }
 
 
-    public static void sendSMS(Context context) {
-        try {
-            String contact_response = new SettingSharedPreferences(context).getEMERGENCY_CONTACT_LIST();
-            if (contact_response != null) {
-                JSONObject jsonObject = new JSONObject(contact_response);
-                JSONArray jsonArray = jsonObject.getJSONArray(WebServices.data);
-                if (jsonArray.length() > 0) {
-                    String sender_name = new SettingSharedPreferences(context).getNAME();
-                    String message = "This message sent by Guardian APP from " + sender_name + ". He may be in emergency. Please take an immediate action";
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jobj = jsonArray.getJSONObject(i);
-                        String phone_number = jobj.getString("phone_number");
-                        if (!phone_number.isEmpty()) {
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phone_number, null, message, null, null);
-                            Toast.makeText(context, "Message Sent to : " + phone_number, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(context, "No contact found. Please check emergency contacts first.", Toast.LENGTH_LONG).show();
-            }
-
-        } catch (Exception ex) {
-            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-        }
-    }
+//    public static void sendSMS(Context context) {
+//        try {
+//            String contact_response = new SettingSharedPreferences(context).getEMERGENCY_CONTACT_LIST();
+//            if (contact_response != null) {
+//                JSONObject jsonObject = new JSONObject(contact_response);
+//                JSONArray jsonArray = jsonObject.getJSONArray(WebServices.data);
+//                if (jsonArray.length() > 0) {
+//                    String sender_name = new SettingSharedPreferences(context).getNAME();
+//                    String message = "This message sent by Guardian APP from " + sender_name + ". He may be in emergency. Please take an immediate action";
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject jobj = jsonArray.getJSONObject(i);
+//                        String phone_number = jobj.getString("phone_number");
+//                        if (!phone_number.isEmpty()) {
+//                            SmsManager smsManager = SmsManager.getDefault();
+//                            smsManager.sendTextMessage(phone_number, null, message, null, null);
+//                            Toast.makeText(context, "Message Sent to : " + phone_number, Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }
+//            } else {
+//                Toast.makeText(context, "No contact found. Please check emergency contacts first.", Toast.LENGTH_LONG).show();
+//            }
+//
+//        } catch (Exception ex) {
+//            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+//            ex.printStackTrace();
+//        }
+//    }
 
     public static String encodeImageBitmap(Bitmap bm) {
         String encImage = "";
@@ -135,26 +133,6 @@ public class SharedMethods {
             Log.d("HomeActivity", "encodeImage: " + e.getMessage());
         }
         return encImage;
-    }
-
-    //================ VALIDATION =====================
-    public static boolean validateName(String txt) {
-        String regx = "^[\\p{L} .'-]+$";
-        Pattern pattern = Pattern.compile(regx, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(txt);
-        return matcher.find();
-    }
-
-    public static boolean validateEmail(String email) {
-        boolean isValid = false;
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
     }
 
 

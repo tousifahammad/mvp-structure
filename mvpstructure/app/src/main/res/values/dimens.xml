@@ -37,4 +37,10 @@
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_120">120dp</dimen>
     <dimen name="dimen_5">5dp</dimen>
+    <dimen name="radius_corner">10dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+    <dimen name="dimen_150">150dp</dimen>
 </resources>

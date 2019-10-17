@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.app.baseproject.R;
 import com.app.baseproject.baseclasses.SharedMethods;
 import com.app.baseproject.utils.Alert;
+import com.app.baseproject.utils.Validator;
 import com.hbb20.CountryCodePicker;
 
 
@@ -69,7 +70,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Alert.showError(this, "First name : " + getString(R.string.field_empty));
             return false;
 
-        } else if (!SharedMethods.validateName(et_user_name.getText().toString().trim())) {
+        } else if (!Validator.validateName(et_user_name.getText().toString().trim())) {
             Alert.showError(this, "Invalid first name");
             return false;
 
@@ -77,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Alert.showError(this, "Email : " + getString(R.string.field_empty));
             return false;
 
-        } else if (!SharedMethods.validateEmail(et_email.getText().toString().trim())) {
+        } else if (!Validator.validateEmail(et_email.getText().toString().trim())) {
             Alert.showError(this, "Invalid email");
             return false;
 

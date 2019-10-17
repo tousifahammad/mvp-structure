@@ -30,14 +30,14 @@ public class ChangePasswordPresenter extends BasePresenter {
             getpDialog().setMessage("While we are updating your password");
             getpDialog().show();
 
-            String url = WebServices.commonUrl + WebServices.change_password;
+            String url = WebServices.customer_login;
 
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_id", getSsp().getUSERID());
+            //hashMap.put("user_id", getSsp().getUSERID());
             hashMap.put("oldpassword", activity.et_old_password.getText().toString().trim());
             hashMap.put("newpassword", activity.et_password.getText().toString().trim());
 
-            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.url_no_change_password);
+            getJfns().makeHttpRequest(url, "POST", hashMap, false, WebServices.request_url_no_1);
         } else {
             Toast.makeText(activity, activity.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
@@ -50,7 +50,7 @@ public class ChangePasswordPresenter extends BasePresenter {
             getpDialog().dismiss();
         }
         switch (url_no) {
-            case WebServices.url_no_change_password:
+            case WebServices.request_url_no_1:
                 if (SharedMethods.isSuccess(result, activity)) {
                     responseCP(result);
                 }
@@ -65,7 +65,7 @@ public class ChangePasswordPresenter extends BasePresenter {
             Toast.makeText(activity, jobj.getString(WebServices.message), Toast.LENGTH_SHORT).show();
 
             // login using new password
-            getSsp().logoutFunction();
+            //getSsp().logoutFunction();
 
             IntentController.gotToActivityNoBack(activity, LoginActivity.class);
 
